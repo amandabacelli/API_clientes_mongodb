@@ -82,16 +82,20 @@ exports.getVariosFiltros = (req,res) =>
 
 exports.deletarCliente = (req,res) => {
     const cpf = req.params.cpf
-    Clientes.find({cpf}, function (error,cliente) {
-        if (error) res.status(500).send(error)
+    //find retorna um array de objetos
+    //findOne retorna o objeto
+    Clientes.findOne({cpf}, function (error,cliente) {
+        if (error) {
+            res.status(500).send(error)
+        }
         
-        if(cliente.length == 0) {
+        if(!cliente) {
             return res.status(200).send({mensagem: `Cliente ${cliente} não encontrado`})
         }
-        res.status(200).send(cliente)
-
-        cliente.remove(function(err){
-            if(!err) {
+        //remove aceita um objeto para deletar,quando recebe uma array ele nao identifica
+        // cliente[0].remove(function(error){ //como cliente é uma array eu falo que quero remover a posição 0
+        cliente.remove(function(error){
+            if(!error) {
                 res.status(204).send({mensagem: `Cliente ${cliente} foi removido com sucesso `})
             }
 

@@ -2,6 +2,13 @@ const express = require("express")
 const router = express.Router()
 const controller = require("../controllers/clientesController")
 
+/**
+ * @api {get} /clientes
+ * @apiGroup Clientes
+ * *
+ * @apiSucess  {Object[]} clientes 
+ */
+
 router.post("/", controller.post)
 // router.get("/", controller.getVariosFiltros)
 router.get("/", controller.get)
